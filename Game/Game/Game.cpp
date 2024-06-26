@@ -1,6 +1,9 @@
 #include "Game.h"
 
-SDL_Texture* playerTex;
+SDL_Texture* player_red_texture;
+SDL_Texture* player_blue_texture;
+SDL_Rect player_blue;
+SDL_Rect player_red;
 
 Game::Game()
 {
@@ -51,32 +54,35 @@ void Game::handleEvents()
 	}
 }
 
-void Game::update()
+void Game::update(int window_width, int window_height)
 {
-	cnt++;
+	
+	player_blue.w = 32 * window_height / 480;
+	player_blue.h = 32 * window_height  /480;
+	player_blue.x = window_width / 2 - player_blue.w / 2 - 150;
+	player_blue.y = window_height / 2 - player_blue.w / 2;
 
-	std::cout << cnt << std::endl;
+	player_red.w = 32;
+	player_red.h = 32;
+	player_red.x = window_width / 2 - player_red.w / 2 + 150;
+	player_red.y = window_height / 2 - player_red.w / 2;
 
-	if (cnt % 2 == 0)
-	{
-		SDL_Surface* tmpSurface = IMG_Load("assets/player_blue.png");
-		playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-		SDL_FreeSurface(tmpSurface);
-	}
-	else
-	{
-		SDL_Surface* tmpSurface = IMG_Load("assets/player_red.png");
-		playerTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-		SDL_FreeSurface(tmpSurface);
-	}
-
-	SDL_Delay(500);
+	SDL_Surface* tmpSurface_red_player = IMG_Load("assets/player_red.png");
+	SDL_Surface* tmpSurface_blue_player = IMG_Load("assets/player_blue.png");
+	player_red_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface_red_player);
+	player_blue_texture = SDL_CreateTextureFromSurface(renderer, tmpSurface_blue_player);
+	SDL_FreeSurface(tmpSurface_red_player);
+	SDL_FreeSurface(tmpSurface_blue_player);
 }
 
 void Game::render()
 {
+	
+
+
 	SDL_RenderClear(renderer);
-	SDL_RenderCopy(renderer, playerTex, NULL, NULL);
+	SDL_RenderCopy(renderer, player_blue_texture, NULL, &player_blue);
+	SDL_RenderCopy(renderer, player_red_texture, NULL, &player_red);
 	SDL_RenderPresent(renderer);
 }
 

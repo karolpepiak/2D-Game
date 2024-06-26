@@ -1,5 +1,4 @@
 #pragma once
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include <iostream>
@@ -13,7 +12,7 @@ public:
 	void init(const char* title, int width, int height, bool fullscreen);
 
 	void handleEvents();
-	void update();
+	void update(int width, int height);
 	bool running() { return isRunning; }
 	void render();
 	void clean();
