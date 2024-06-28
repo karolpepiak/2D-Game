@@ -2,18 +2,19 @@
 
 Game* game = nullptr;
 
-
-
 int main(int argc, char* argv[])
 {
 	int w_width = 0;
 	int w_height = 0;
 	int r_choice = 0;
+	int counter = 0;
 	char f_choice = 0;
-	bool fullscrean_mode = false;
+	bool fullscreen_mode = false;
 
+	//Resolution choice
 	std::cout << "Set window resolution:\n" << "[1] 680x480\n" << "[2] 800x600\n" << "[3] 1024x768\n" << "[4] 1280x720\n" << "[5] 1280x1024\n" << "[6] 1366x768\n" << "[7] 1600x900\n" << "[8] 1920x1080\n";
 	std::cin >> r_choice;
+	
 	switch (r_choice)
 	{
 	case 1:
@@ -51,29 +52,35 @@ int main(int argc, char* argv[])
 	default:
 		break;
 	}
-	std::cout << "Run Game in fullscrean mode? Yes[Y]/No[N]\n";
+
+	//Full-Screen mode choice
+	std::cout << "Run Game in fullscreen mode? Yes[Y]/No[N]\n";
 	std::cin >> f_choice;
+
 	if (f_choice == 'Y' || f_choice == 'y')
 	{
-		fullscrean_mode = true;
+		fullscreen_mode = true;
 	}
 	else
 	{
-		fullscrean_mode = false;
+		fullscreen_mode = false;
 	}
 
-
-
+	//Create new Game and init it with specyfic param
 	game = new Game();
-	game->init("GameWindow", w_width, w_height, fullscrean_mode);
-
+	game->init("Game Window", w_width, w_height, fullscreen_mode);
+	game->texture_loader();
+	//Game main loop
 	while (game->running())
 	{
 		game->handleEvents();
-		game->update(w_width, w_height);
+		counter++;
+		game->update(w_width, w_height, counter);
 		game->render();
+		Sleep(100);
 	}
 
+	//Close Game
 	game->clean();
 	return 0;
 }
