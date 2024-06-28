@@ -15,3 +15,6 @@ step 3/34 - Adding: 
 full-screen mode selection from the console
 - rendering multiple objects at the same time
 - scaling objects by resolution height
+
+Day 4
+Step 3/34 - fixed memory usage by rewriting functions, no more increasing memory usage. Added an increasing counter that influences player location.
